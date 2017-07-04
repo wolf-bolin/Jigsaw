@@ -25,10 +25,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
         main.cpp \
-        mainwindow.cpp
+        mainwindow.cpp \
+    rankingdialog.cpp \
+    gaming.cpp
 
 HEADERS += \
-        mainwindow.h
+        mainwindow.h \
+    rankingdialog.h \
+    gaming.h
 
 FORMS += \
-        mainwindow.ui
+        mainwindow.ui \
+    rankingdialog.ui \
+    gaming.ui
