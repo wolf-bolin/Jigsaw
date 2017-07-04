@@ -72,6 +72,11 @@ void MainWindow::on_pushButton_AC_clicked()
     ui->lineEdit->setText("");
 }
 
+void MainWindow::on_pushButton_Drop_clicked()
+{
+     ui->lineEdit->setText(ui->lineEdit->text() + ".");
+}
+
 void MainWindow::on_pushButton_Add_clicked()
 {
     ui->lineEdit->setText(ui->lineEdit->text() + "+");
@@ -89,7 +94,7 @@ void MainWindow::on_pushButton_Multi_clicked()
 
 void MainWindow::on_pushButton_Div_clicked()
 {
-     ui->lineEdit->setText(ui->lineEdit->text() + "/");
+     ui->lineEdit->setText(ui->lineEdit->text() + "÷");
 }
 
 void MainWindow::on_pushButton_Left_clicked()
@@ -112,13 +117,27 @@ void MainWindow::on_pushButton_Power_clicked()
     ui->lineEdit->setText(ui->lineEdit->text() + "^");
 }
 
+void MainWindow::on_pushButton_Del_clicked()
+{
+    QString temp_1 =  ui->lineEdit->text();
+    ui->lineEdit->setText(temp_1);
+    int a = temp_1.capacity();
+    temp_1 = temp_1.left(a-1);
+    ui->lineEdit->setText(temp_1);
+}
+
 void MainWindow::on_pushButton_Equal_clicked()
 {
     QString temp = ui->lineEdit->text();
+    temp.replace("÷","/");
     string str = temp.toStdString();
     str = calc(str);
     temp = QString::fromStdString(str);
     ui->lineEdit->setText(temp);
     ui->lineEdit->text().clear();
 }
+
+
+
+
 
