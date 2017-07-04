@@ -31,11 +31,15 @@
     </property>
     <property name="font">
      <font>
+      <family>Avenir Next</family>
       <pointsize>40</pointsize>
      </font>
     </property>
     <property name="cursor">
      <cursorShape>ArrowCursor</cursorShape>
+    </property>
+    <property name="text">
+     <string/>
     </property>
     <property name="maxLength">
      <number>327</number>
@@ -53,12 +57,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>)</string>
     </property>
@@ -72,12 +79,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>(</string>
     </property>
@@ -91,12 +101,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>%</string>
     </property>
@@ -110,12 +123,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>^</string>
     </property>
@@ -129,12 +145,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>4</string>
     </property>
@@ -148,12 +167,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>5</string>
     </property>
@@ -167,12 +189,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>6</string>
     </property>
@@ -186,12 +211,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>/</string>
     </property>
@@ -205,12 +233,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>1</string>
     </property>
@@ -224,12 +255,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>2</string>
     </property>
@@ -243,12 +277,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>3</string>
     </property>
@@ -262,12 +299,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>-</string>
     </property>
@@ -281,12 +321,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>0</string>
     </property>
@@ -300,12 +343,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>AC</string>
     </property>
@@ -319,12 +365,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>=</string>
     </property>
@@ -338,12 +387,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>+</string>
     </property>
@@ -357,12 +409,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>7</string>
     </property>
@@ -376,12 +431,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>9</string>
     </property>
@@ -395,12 +453,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>8</string>
     </property>
@@ -414,12 +475,15 @@
       <height>71</height>
      </rect>
     </property>
+<<<<<<< Updated upstream
+=======
     <property name="font">
      <font>
-      <family>Adobe Arabic</family>
+      <family>Avenir Next</family>
       <pointsize>28</pointsize>
      </font>
     </property>
+>>>>>>> Stashed changes
     <property name="text">
      <string>*</string>
     </property>
