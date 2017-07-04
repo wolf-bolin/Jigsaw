@@ -121,12 +121,21 @@ public:
     void pop(){
         buffer.pop_back();
     }
+    void clear(){
+        buffer.resize(0);
+    }
 };
 shortexp core();
-stringstream buffer,anwser;
+stringstream buffer,answer;
 stack expstack;
 
 string calc(string exp){
+    //清空数据域
+    buffer.clear();
+    buffer.str("");
+    answer.clear();
+    answer.str("");
+    expstack.clear();
     //检查输入字符串中括号是否匹配
     int sum=0;
     for(unsigned int i=0;i!=exp.size();i++){
@@ -134,7 +143,7 @@ string calc(string exp){
             exp[i]!='5'&&exp[i]!='6'&&exp[i]!='7'&&exp[i]!='8'&&exp[i]!='9'&&
             exp[i]!='+'&&exp[i]!='-'&&exp[i]!='*'&&exp[i]!='/'&&exp[i]!='%'&&
             exp[i]!='^'&&exp[i]!='('&&exp[i]!=')'&&exp[i]!=' '&&exp[i]!='.'){
-                anwser<<"Illegal"<<endl;
+                answer<<"Illegal"<<endl;
                 return 0;
         }
         if(exp[i]==' '){
@@ -149,19 +158,19 @@ string calc(string exp){
         buffer<<exp[i];
     }
     if(sum!=0){
-        anwser<<"Illegal"<<endl;
+        answer<<"Illegal"<<endl;
         return 0;
     }
     //递归计算表达式的值
     shortexp it=core();
     it.getNum();
     if(it.flag){
-        anwser<<"Illegal"<<endl;
+        answer<<"Illegal"<<endl;
     }else{
-        anwser<<it.getNum()<<endl;
+        answer<<it.getNum()<<endl;
     }
     string str;
-    anwser>>str;
+    answer>>str;
     return str;
 }
 double getNextNum(){
