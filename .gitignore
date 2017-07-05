@@ -4,7 +4,6 @@ _gsdata_/
 *.user.*
 *.autosave
 .DS_Store
-.gitignore
 .idea
 build-*
 *.pro.user*
