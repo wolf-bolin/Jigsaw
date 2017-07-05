@@ -5,6 +5,3 @@ build-*-Debug
 *.user
 *.user.*
 *.autosave
-.user
-ProjectB/Clock_2/Clock.pro.user
-ProjectA/Calculate/Calculate.pro.user
