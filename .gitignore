@@ -1,0 +1,7 @@
+_gsdata_/
+*/_gsdata_/
+build-*-Release
+build-*-Debug
+*.user
+*.user.*
+*.autosave
