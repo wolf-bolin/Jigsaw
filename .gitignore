@@ -9,3 +9,5 @@ build-*
 *.pro.user*
 cmake-build-debug
 __pycache__
+production.*
+development.*
