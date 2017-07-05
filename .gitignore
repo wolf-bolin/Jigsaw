@@ -9,3 +9,4 @@ _gsdata_/
 build-*
 *.pro.user*
 cmake-build-debug
+__pycache__
