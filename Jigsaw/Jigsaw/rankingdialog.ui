@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>471</width>
+    <width>544</width>
     <height>390</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>451</width>
+     <width>521</width>
      <height>331</height>
     </rect>
    </property>
@@ -40,12 +40,12 @@
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>431</width>
+       <width>501</width>
        <height>281</height>
       </rect>
      </property>
      <property name="columnCount">
-      <number>4</number>
+      <number>5</number>
      </property>
      <column>
       <property name="text">
@@ -64,6 +64,11 @@
      </column>
      <column>
       <property name="text">
+       <string>难度</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
        <string>时间</string>
       </property>
      </column>
@@ -78,12 +83,12 @@
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>431</width>
+       <width>501</width>
        <height>281</height>
       </rect>
      </property>
      <property name="columnCount">
-      <number>4</number>
+      <number>5</number>
      </property>
      <column>
       <property name="text">
@@ -102,6 +107,11 @@
      </column>
      <column>
       <property name="text">
+       <string>难度</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
        <string>时间</string>
       </property>
      </column>
@@ -111,7 +121,7 @@
   <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
-     <x>350</x>
+     <x>420</x>
      <y>350</y>
      <width>113</width>
      <height>32</height>
