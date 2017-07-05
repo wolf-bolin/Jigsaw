@@ -9,8 +9,6 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
 }
 
-
-
 MainWindow::~MainWindow()
 {
     delete ui;
@@ -120,9 +118,11 @@ void MainWindow::on_pushButton_Power_clicked()
 void MainWindow::on_pushButton_Del_clicked()
 {
     QString temp_1 =  ui->lineEdit->text();
-    ui->lineEdit->setText(temp_1);
-    int a = temp_1.capacity();
-    temp_1 = temp_1.left(a-1);
+    string temp_2 = temp_1.toStdString();
+    if(temp_2.size()>0){
+        temp_2 = temp_2.substr(0,temp_2.size()-1);
+    }
+    temp_1 = QString::fromStdString(temp_2);
     ui->lineEdit->setText(temp_1);
 }
 
