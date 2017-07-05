@@ -49,7 +49,7 @@ void Clock::paintEvent(QPaintEvent *)
     int m = QTime::currentTime().minute();
     int h = QTime::currentTime().hour();
 
-    painter.drawText(-30, 50, QTime::currentTime().toString());
+    painter.drawText(-25, 50, QTime::currentTime().toString());
 
     painter.save();
     painter.rotate(((h % 12) +  static_cast<double>(m / 60.0)) * 30);
