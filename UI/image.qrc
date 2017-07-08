@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/picture">
+        <file alias="pictrue1">G:/图片/IMG_4109.JPG</file>
+        <file alias="picture2">G:/图片/timg.jpg</file>
+    </qresource>
+</RCC>
