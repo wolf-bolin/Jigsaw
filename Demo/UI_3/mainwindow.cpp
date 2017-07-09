@@ -10,7 +10,7 @@
 #include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) :
-            QMainWindow(parent),
+    QMainWindow(parent),
     ui_main(new Ui::MainWindow)
 {
     ui_main->setupUi(this);
@@ -52,9 +52,9 @@ MainWindow::MainWindow(QWidget *parent) :
     QPixmap cutPic1[9];
     QIcon cutIcon[9];
     for(int i=1;i<9;i++){
-       cutPic1[i]= QPixmap::fromImage(newImg).copy((i%3)*100,(i/3)*100,100,100);
-       cutIcon[i]= QIcon(cutPic1[i]);
-       }
+        cutPic1[i]= QPixmap::fromImage(newImg).copy((i%3)*100,(i/3)*100,100,100);
+        cutIcon[i]= QIcon(cutPic1[i]);
+    }
     ui_main->pushButton_0->setIcon(cutIcon[0]);
     ui_main->pushButton_0->setIconSize(QSize(100,100));
     ui_main->pushButton_1->setIcon(cutIcon[1]);
@@ -109,12 +109,12 @@ void MainWindow::on_exit_Button_clicked()                //点击退出按钮的
 
 void MainWindow::mousePressEvent(QMouseEvent *event)    //使得窗口能够被拖动的效果函数
 {
- if(event->button() == Qt::LeftButton)
- {
-      mouse_press = true;
-      //鼠标相对于窗体的位置（或者使用event->globalPos() - this->pos()）
-      move_point = event->pos();
- }
+    if(event->button() == Qt::LeftButton)
+    {
+        mouse_press = true;
+        //鼠标相对于窗体的位置（或者使用event->globalPos() - this->pos()）
+        move_point = event->pos();
+    }
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
@@ -122,8 +122,8 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 
     if(mouse_press)                                     //若鼠标左键被按下
     {
-       QPoint move_pos = event->globalPos();            //鼠标相对于屏幕的位置
-       this->move(move_pos - move_point);               //移动主窗体位置
+        QPoint move_pos = event->globalPos();            //鼠标相对于屏幕的位置
+        this->move(move_pos - move_point);               //移动主窗体位置
     }
 }
 
@@ -244,12 +244,12 @@ void MainWindow::on_pushButton_8_clicked()
 void MainWindow::on_New_game_Button_clicked()
 {
     if(!isStart) //尚未开始 开始计时
-        {
+    {
 
-            timer->start(1000);
+        timer->start(1000);
 
-        }
-        isStart = !isStart;
+    }
+    isStart = !isStart;
 }
 void MainWindow::updateTime()
 {

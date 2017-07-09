@@ -103,3 +103,32 @@ int main(int argc,char *argv[]){
 ​	XXXXX.ui文件主要保存UI界面的XML信息。
 
 ​	ui_XXXXX.h文件主要是UI设计后生成的文件，资源管理器中不可见。
+
+##  Release
+
+在Windows环境下需要打包应用程序才能在其他电脑上运行。
+
+* 首先需要IDE左下角电脑图标处选Release，然后点击绿色播放按钮，编译发布程序。
+* 在与项目文件夹中找到“build-*-Release”将XXXXX.exe复制到新的独立的目录。
+* 在“C:\Qt\Qt5.9.0\5.9\mingw53_32\bin”中找到“qtenv2.bat”
+* 运行后进入上述创建的目录，执行`windeployqt XXXXX.exe`
+* 程序会自动将程序需要的动态数据库复制在与exe同级路径下。
+* 采用安装包打包软件即可将这些文件合并为一个完整的安装包。
+* 或者将这些文件全部压缩发送，在另一台电脑上才能运行。
+
+
+## Hide Menu
+
+* 在UI设计界面中删除"menuBar""mainToolBar""statusBar"
+
+* 在"main.cpp"中将窗体的参数修改为
+
+  ```
+  MainWindow w;
+  w.setWindowOpacity(1);
+  w.setWindowFlags(Qt::FramelessWindowHint);
+  w.setAttribute(Qt::WA_TranslucentBackground);
+  w.show();
+  ```
+
+  ​

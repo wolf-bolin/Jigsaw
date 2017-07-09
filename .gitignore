@@ -6,6 +6,7 @@ _gsdata_/
 .DS_Store
 .idea
 build-*
+*/build-*
 *.pro.user*
 cmake-build-debug
 __pycache__
