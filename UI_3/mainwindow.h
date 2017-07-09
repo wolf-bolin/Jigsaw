@@ -14,6 +14,8 @@ namespace Ui {
 class MainWindow;
 }
 
+
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -22,10 +24,10 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    QString filename;
+
     void SwapBtn(int m,int n) ;
     void MySwap(int k);
-
+    QString filename;
 
 private slots:
     void mousePressEvent(QMouseEvent *event);
