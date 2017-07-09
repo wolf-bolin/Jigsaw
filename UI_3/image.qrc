@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/picture">
+        <file alias="picture1">G:/图片/timg.jpg</file>
+        <file alias="picture2">G:/图片/01.jpg</file>
+        <file alias="picture3">G:/图片/02.jpg</file>
+    </qresource>
+</RCC>
