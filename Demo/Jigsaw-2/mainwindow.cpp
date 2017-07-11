@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     setMouseTracking(true);//窗口移动功能的前提声明
 
-    setWindowFlags(Qt::FramelessWindowHint);//设置关于窗体为圆角
+    setWindowFlags(Qt::FramelessWindowHint);//隐藏标题栏
     QBitmap bmp(this->size());
     bmp.fill();
     QPainter p(&bmp);
@@ -42,7 +42,8 @@ MainWindow::MainWindow(QWidget *parent) :
     //数据初始化
     readStatus(numData,gameStep,gameTime);//读取本地文件或者初始化
     readMoveLog(logs);
-    
+    readGameLog(gameRecord);
+
     picFilePath = ":/picture/yzk.jpg";
     //初始化游戏状态与计时器
     gameTimer = new QTimer;  //初始化定时器
@@ -76,12 +77,6 @@ void MainWindow::on_saveStatusButton_clicked()
 void MainWindow::on_exitGameButton_clicked()
 {
     QApplication::quit();
-}
-void MainWindow::on_gameSettingButton_clicked()
-{
-    connect(&settingDialog,SIGNAL(sendPicPath(QString)),this,SLOT(setNewPicture(QString)));
-    settingDialog.setModal(true);
-    settingDialog.show();
 }
 
 //游戏内容相关
@@ -152,10 +147,6 @@ void MainWindow::on_undoStepButton_clicked()
 
 void MainWindow::on_autoSolveButton_clicked()
 {
-    if(playing==0){
-        return;
-    }
-    playing=0;
     astar(numData,answer);
     CGTimer = new QTimer;
     connect(CGTimer,SIGNAL(timeout()),this,SLOT(AStarSolveStep()));
@@ -163,6 +154,7 @@ void MainWindow::on_autoSolveButton_clicked()
     gameTimer->stop();
     gameTime=0;
     gameStep=0;
+    playing=0;
 }
 
 //独立代码块
@@ -210,11 +202,8 @@ void MainWindow::clickEvent(int n){
         QMessageBox::information(this,tr("提示"),tr("游戏完成"));
         gameTimer->stop();
         playing=0;
-        
-        successDialog.setModal(true);
-        successDialog.show();
-        connect(this,SIGNAL(gameComplete(int,int,int)),&successDialog,SLOT(setParameter(int,int,int)));
-        emit gameComplete(gameTime,gameStep,answer.size());
+        gameRecord.push_back(gameinfo("admin",gameTime,gameStep,gameTime*(gameStep-answer.size()+1)));
+        saveGameLog(gameRecord);
         return;
     }
 }
@@ -313,4 +302,9 @@ void MainWindow::AStarSolveStep(){
     if(answer.size()==0){
         CGTimer->stop();
     }
+}
+
+void MainWindow::on_gameSettingButton_clicked()
+{
+    settingdialog.show();
 }

@@ -16,8 +16,8 @@
   <widget class="QTableWidget" name="gameRecordTable">
    <property name="geometry">
     <rect>
-     <x>70</x>
-     <y>90</y>
+     <x>50</x>
+     <y>50</y>
      <width>281</width>
      <height>361</height>
     </rect>
@@ -26,8 +26,8 @@
   <widget class="QTableWidget" name="globalRankTable">
    <property name="geometry">
     <rect>
-     <x>400</x>
-     <y>90</y>
+     <x>390</x>
+     <y>60</y>
      <width>341</width>
      <height>361</height>
     </rect>

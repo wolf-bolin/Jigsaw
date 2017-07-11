@@ -34,9 +34,6 @@ public:
         gameStep=b;
         score=c;
     }
-    bool operator < (const gameinfo & x)const{
-        return score<x.score;
-    }
 };
 
 void moveLog(std::vector<moveinfo> &logs,int m,int n);

@@ -3,8 +3,8 @@
 # Project created by QtCreator 2017-07-09T14:54:10
 #
 #-------------------------------------------------
-QT += network
-QT += core gui
+
+QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -28,21 +28,21 @@ SOURCES += \
         mainwindow.cpp \
     gamelogic.cpp \
     rankbrowser.cpp \
-    setting.cpp \
-    success.cpp
+    succeed_dialog.cpp \
+    setting_dialog.cpp
 
 HEADERS += \
         mainwindow.h \
     gamelogic.h \
     rankbrowser.h \
-    setting.h \
-    success.h
+    succeed_dialog.h \
+    setting_dialog.h
 
 FORMS += \
         mainwindow.ui \
     rankbrowser.ui \
-    setting.ui \
-    success.ui
+    succeed_dialog.ui \
+    setting_dialog.ui
 
 RESOURCES += \
     picture/picture.qrc \

@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/picture">
+        <file>yzk.jpg</file>
+        <file alias="Succeed_picture">huangguan.png</file>
+        <file alias="picture1">11.jpg</file>
+        <file alias="picture2">12.jpg</file>
+    </qresource>
+</RCC>

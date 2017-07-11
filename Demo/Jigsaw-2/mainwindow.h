@@ -12,11 +12,11 @@
 #include <QTime>
 #include <QDebug>
 #include <vector>
+#include <QFileDialog>
 
 #include "gamelogic.h"
 #include "rankbrowser.h"
-#include "setting.h"
-#include "success.h"
+#include "setting_dialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -67,19 +67,16 @@ private slots:
 
     void on_gameSettingButton_clicked();
 
-    void setNewPicture(QString filePath);
-
-signals:
-    void gameComplete(int,int,int);
-
 private:
     Ui::MainWindow *ui;
 
     std::vector<QPushButton*> numButton;
     std::vector<int> numData;
 
+    QFileDialog filedialog;
+
     //UI函数
-    //void setNewPicture(QString filePath);
+    void setNewPicture(QString filePath);
     void updateLCD();
     void SwapBtn(int m,int n);
 
@@ -98,6 +95,7 @@ private:
     int gameTime = 0;//记录游戏时间
     int gameStep;//计步
     std::vector<moveinfo> logs;//记录步骤
+    std::vector<gameinfo> gameRecord;//历史游戏记录
 
     //解题组建
     QTimer* CGTimer;
@@ -105,8 +103,8 @@ private:
 
     //UI样式
     rankBrowser rankBrowserWidget;
-    setting settingDialog;
-    success successDialog;
+    Setting_dialog settingdialog;
+
     QString picFilePath;
     QString ButtonStyle_1 = "QPushButton{background-color:#907B63;"
 

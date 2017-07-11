@@ -352,7 +352,6 @@ void astar(std::vector<int> numData,std::vector<moveinfo> &answer){
     }
     //利用结点的parent指针回溯出路径
     Node* p=targetNode;
-    answer.clear();
     while(p->parent!=NULL){
         answer.push_back(moveinfo(0,(p->blankPos),(p->parent->blankPos)));
         p=p->parent;
