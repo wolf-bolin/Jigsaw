@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->autoSolveButton->setStyleSheet(ButtonStyle_1);
     ui->rankBrowse->setStyleSheet(ButtonStyle_1);
     ui->gameSettingButton->setStyleSheet(ButtonStyle_1);
-    ui->newGameButton->setStyleSheet(ButtonStyle_1);
+    ui->newGameButton->setStyleSheet(ButtonStyle_newGame);
     ui->undoStepButton->setStyleSheet(ButtonStyle_1);
     ui->exitGameButton->setStyleSheet(ButtonStyle_1);
 
