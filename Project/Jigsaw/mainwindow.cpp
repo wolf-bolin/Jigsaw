@@ -7,16 +7,15 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    /*successDialog.setModal(true);
+    successDialog.show();*/
+
     setMouseTracking(true);//窗口移动功能的前提声明
 
-    setWindowFlags(Qt::FramelessWindowHint);//设置关于窗体为圆角
-    QBitmap bmp(this->size());
-    bmp.fill();
-    QPainter p(&bmp);
-    p.setPen(Qt::NoPen);
-    p.setBrush(Qt::black);
-    p.drawRoundedRect(bmp.rect(),20,20);
-    setMask(bmp);//设置窗体背景
+    QPixmap pix;
+    pix.load(":/picture/mainBackground.png");
+    resize(pix.size());
+    setMask(pix.mask());
 
     //将ui中的数码按钮转载在数组中
     numButton.resize(9);
@@ -31,19 +30,31 @@ MainWindow::MainWindow(QWidget *parent) :
     numButton[8]=ui->picButton8;
 
     //最好先完成数据的读入再初始化界面
-    ui->saveStatusButton->setStyleSheet(ButtonStyle_1);
-    ui->autoSolveButton->setStyleSheet(ButtonStyle_1);
-    ui->rankBrowse->setStyleSheet(ButtonStyle_1);
-    ui->gameSettingButton->setStyleSheet(ButtonStyle_1);
-    ui->newGameButton->setStyleSheet(ButtonStyle_newGame);
-    ui->undoStepButton->setStyleSheet(ButtonStyle_1);
-    ui->exitGameButton->setStyleSheet(ButtonStyle_1);
+    ui->saveStatusButton->setStyleSheet(ButtonStyle);
+    ui->autoSolveButton->setStyleSheet(ButtonStyle);
+    ui->rankBrowse->setStyleSheet(ButtonStyle);
+    ui->gameSettingButton->setStyleSheet(ButtonStyle);
+    ui->newGameButton->setStyleSheet(ButtonStyle);
+    ui->undoStepButton->setStyleSheet(ButtonStyle);
+    ui->exitGameButton->setStyleSheet(ButtonStyle);
+
+    int loadedFontID = QFontDatabase::addApplicationFont(":/font/miaowu.ttf");
+    QStringList loadedFontFamilies = QFontDatabase::applicationFontFamilies(loadedFontID);
+    QString mwfont = loadedFontFamilies.at(0);
+    ui->saveStatusButton->setFont(QFont(mwfont,16));
+    ui->autoSolveButton->setFont(QFont(mwfont,16));
+    ui->rankBrowse->setFont(QFont(mwfont,16));
+    ui->gameSettingButton->setFont(QFont(mwfont,16));
+    ui->newGameButton->setFont(QFont(mwfont,16));
+    ui->undoStepButton->setFont(QFont(mwfont,16));
+    ui->exitGameButton->setFont(QFont(mwfont,16));
 
     //数据初始化
     readStatus(numData,gameStep,gameTime);//读取本地文件或者初始化
     readMoveLog(logs);
-    
-    picFilePath = ":/picture/yzk.jpg";
+    std::string picPath;
+    readSetting(picPath);
+    picFilePath = QString::fromStdString(picPath);
     //初始化游戏状态与计时器
     gameTimer = new QTimer;  //初始化定时器
     connect(gameTimer,SIGNAL(timeout()),this,SLOT(addTime()));
@@ -61,6 +72,11 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+void MainWindow::paintEvent(QPaintEvent *event){
+    QPainter painter(this);
+    painter.drawPixmap(0,0,QPixmap(":/picture/mainBackground.png"));
+}
+// ////////////////////////////////////////////////////////////////////////////
 //游戏功能相关
 void MainWindow::on_rankBrowse_clicked()
 {
@@ -83,7 +99,7 @@ void MainWindow::on_gameSettingButton_clicked()
     settingDialog.setModal(true);
     settingDialog.show();
 }
-
+// ////////////////////////////////////////////////////////////////////////////////////////
 //游戏内容相关
 void MainWindow::on_picButton0_clicked()
 {
@@ -148,6 +164,7 @@ void MainWindow::on_undoStepButton_clicked()
     }
     doRvoke(logs.back().n,logs.back().m);//按照记录向后撤步
     logs.pop_back();
+    updateLCD();
 }
 
 void MainWindow::on_autoSolveButton_clicked()
@@ -164,8 +181,8 @@ void MainWindow::on_autoSolveButton_clicked()
     gameTime=0;
     gameStep=0;
 }
-
-//独立代码块
+// ///////////////////////////////////////////////////////////////////////////////////
+//逻辑代码块
 void MainWindow::clickEvent(int n){
     if(!playing){
         QMessageBox::information(this,tr("提示"),tr("请开始一局新游戏"));
@@ -205,7 +222,7 @@ void MainWindow::clickEvent(int n){
             doNext(n,n+3);
         }
     }
-
+    updateLCD();
     if(checkAnswer(numData)){
         QMessageBox::information(this,tr("提示"),tr("游戏完成"));
         gameTimer->stop();
@@ -222,7 +239,6 @@ void MainWindow::doNext(int m,int n){
     SwapBtn(m,n);
     //计步
     gameStep++;
-    ui->gameStepLCD->display(gameStep);
     //后台数据处理
     logs.push_back(moveinfo(gameStep,m,n));
 }
@@ -230,7 +246,6 @@ void MainWindow::doRvoke(int m,int n){
     SwapBtn(m,n);
     //计步
     gameStep++;
-    ui->gameStepLCD->display(gameStep);
 }
 void MainWindow::SwapBtn(int m,int n){
     //交换图像
@@ -259,22 +274,30 @@ void MainWindow::setNewPicture(QString filePath){//图像的重新载入
     if(!(picture.load(filePath)) ) //加载图像
     {
         QMessageBox::information(this,tr("打开图像失败"),tr("打开图像失败!"));
+        picFilePath = ":/picture/00.jpg";
+        saveSetting(picFilePath.toStdString());
         return;
     }
-    QImage pictureScaled = picture.scaled(300,300);//设定大小
+    picFilePath = filePath;
+    saveSetting(picFilePath.toStdString());
+    QImage pictureScaled = picture.scaled(405,405);//设定大小
     QPixmap pictureCut;
     QIcon buttonIcon;
     int picPos;
     for(int i=0;i<8;i++){
-        pictureCut= QPixmap::fromImage(pictureScaled).copy((i%3)*100,(i/3)*100,100,100);
+        pictureCut= QPixmap::fromImage(pictureScaled).copy((i%3)*135,(i/3)*135,135,135);
         buttonIcon= QIcon(pictureCut);
         picPos=findNumPos(i+1);
         numButton[picPos]->setIcon(buttonIcon);
-        numButton[picPos]->setIconSize(QSize(100,100));
+        numButton[picPos]->setIconSize(QSize(135,135));
     }
     buttonIcon= QIcon();
     numButton[findNumPos(0)]->setIcon(buttonIcon);
-    numButton[findNumPos(0)]->setIconSize(QSize(100,100));
+    numButton[findNumPos(0)]->setIconSize(QSize(135,135));
+
+    pictureScaled = picture.scaled(160,160);
+    pictureCut = QPixmap::fromImage(pictureScaled);
+    ui->picturePreview->setPixmap(pictureCut);
 }
 int MainWindow::findNumPos(int n){//用于查询每个数码的位置
     for(unsigned int i=0;i!=numData.size();i++){
@@ -285,10 +308,8 @@ int MainWindow::findNumPos(int n){//用于查询每个数码的位置
     return -1;
 }
 void MainWindow::addTime(){//更新UI中时间的显示
-    *timeRecord = timeRecord->addSecs(1);
     gameTime++;
-    ui->gameTimeLCD->display(timeRecord->toString("hh:mm:ss"));
-
+    updateLCD();
 }
 void MainWindow::updateLCD(){//更新UI中LCD
     int hh,mm,ss;
@@ -303,9 +324,10 @@ void MainWindow::updateLCD(){//更新UI中LCD
         ss=gameTime%60;
     }
     timeRecord = new QTime(hh,mm,ss);
-    ui->gameTimeLCD->display(timeRecord->toString("hh:mm:ss"));
-    //qDebug()<<gameTime<<hh<<" "<<mm<<" "<<ss<<" "<<" "<<timeRecord->toString("hh:mm:ss");
-    ui->gameStepLCD->display(gameStep);
+    ui->gameTimeLCD->setText(timeRecord->toString("mm:ss"));
+    ui->gameStepLCD->setText(QString::number(gameStep,10));
+    int scoreNow=gameTime*(gameStep-answer.size()+1);
+    ui->gameScoreLCD->setText(QString::number(scoreNow,10));
 }
 void MainWindow::AStarSolveStep(){
     SwapBtn(answer.back().m,answer.back().n);

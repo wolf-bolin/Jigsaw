@@ -94,6 +94,20 @@ void saveSetting(std::string &picPath,bool BGM,bool keyMusic){
     fout<<picPath<<BGM<<keyMusic;
 }
 
+void saveSetting(std::string picPath){
+    std::ofstream fout("./setting.info");
+    fout<<picPath;
+}
+
+void readSetting(std::string &picPath){
+    std::ifstream fin("./setting.info");
+    if(!fin){
+        picPath=":/picture/00.jpg";
+        return;
+    }
+    fin>>picPath;
+}
+
 bool canSolve(std::vector<int> &numData,std::vector<int> &standard){
 
     int sum1=0,sum2=0;

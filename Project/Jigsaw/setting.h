@@ -4,6 +4,10 @@
 #include <QDialog>
 #include <QFileDialog>
 #include <QDebug>
+#include <QPixmap>
+#include <QBitmap>
+#include <QPainter>
+#include <QFontDatabase>
 
 namespace Ui {
 class setting;
@@ -16,6 +20,9 @@ class setting : public QDialog
 public:
     explicit setting(QWidget *parent = 0);
     ~setting();
+
+protected:
+    void paintEvent(QPaintEvent *event);
 
 private slots:
     void on_picButton6_clicked();
@@ -30,6 +37,8 @@ private slots:
 
     void on_picButton5_clicked();
 
+    void on_sureButton_clicked();
+
 signals:
 
     void sendPicPath(QString);
@@ -38,6 +47,18 @@ private:
     Ui::setting *ui;
 
     QFileDialog* fileDialog;
+
+    QString ButtonStyle = "QPushButton{background-color:#907B63;"
+
+                            "color: white;   border-radius: 10px;  border: 2px groove gray;"
+
+                            "border-style: outset;}"
+
+                            "QPushButton:hover{background-color:white; color: black;}"
+
+                            "QPushButton:pressed{background-color:rgb(85, 170, 255);"
+
+                            "border-style: inset; }";
 };
 
 #endif // SETTING_H

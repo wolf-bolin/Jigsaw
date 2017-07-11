@@ -49,7 +49,8 @@ void readStatus(std::vector<int> &numData,int &gameStep,int &gameTime);
 void saveGameLog(std::vector<gameinfo> &rankTable);
 void readGameLog(std::vector<gameinfo> &rankTable);
 
-//void saveSetting();
+void saveSetting(std::string picPath);
+void readSetting(std::string &picPath);
 
 bool canSolve(std::vector<int> &numData,std::vector<int> &standard);
 void newGame(std::vector<int> &numData,int &gameStep,int &gameTime);

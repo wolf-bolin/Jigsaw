@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>794</width>
-    <height>560</height>
+    <width>1261</width>
+    <height>710</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,21 +16,47 @@
   <widget class="QTableWidget" name="gameRecordTable">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>50</y>
-     <width>281</width>
-     <height>361</height>
+     <x>300</x>
+     <y>220</y>
+     <width>350</width>
+     <height>360</height>
     </rect>
    </property>
   </widget>
   <widget class="QTableWidget" name="globalRankTable">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>60</y>
-     <width>341</width>
-     <height>361</height>
+     <x>700</x>
+     <y>220</y>
+     <width>350</width>
+     <height>360</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="personalInfo">
+   <property name="geometry">
+    <rect>
+     <x>300</x>
+     <y>600</y>
+     <width>611</width>
+     <height>50</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="sureButton">
+   <property name="geometry">
+    <rect>
+     <x>920</x>
+     <y>620</y>
+     <width>131</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>关闭</string>
    </property>
   </widget>
  </widget>

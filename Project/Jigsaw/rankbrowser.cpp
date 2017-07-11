@@ -6,29 +6,46 @@ rankBrowser::rankBrowser(QWidget *parent) :
     ui(new Ui::rankBrowser)
 {
     ui->setupUi(this);
-    ui->gameRecordTable->setColumnCount(4);
-    ui->gameRecordTable->horizontalHeader()->setDefaultSectionSize(80);
+
     QStringList header;
     header<<tr("用户名")<<tr("时间")<<tr("步数")<<tr("分数");
+    ui->gameRecordTable->setColumnCount(4);
     ui->gameRecordTable->setHorizontalHeaderLabels(header);
+    ui->gameRecordTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     QFont font = ui->gameRecordTable->horizontalHeader()->font();
     font.setBold(true);
     ui->gameRecordTable->horizontalHeader()->setFont(font);
     ui->gameRecordTable->horizontalHeader()->setStyleSheet("QHeaderView::section{background:skyblue;}"); //设置表头背景色
     ////////////////////////////////////////////////////
     ui->globalRankTable->setColumnCount(4);
-    ui->globalRankTable->horizontalHeader()->setDefaultSectionSize(80);
     ui->globalRankTable->setHorizontalHeaderLabels(header);
+    ui->globalRankTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
     ui->globalRankTable->horizontalHeader()->setFont(font);
     ui->globalRankTable->horizontalHeader()->setStyleSheet("QHeaderView::section{background:skyblue;}"); //设置表头背景色
 
     manager = new QNetworkAccessManager(this);
     QObject::connect(manager, SIGNAL(finished(QNetworkReply * )), this, SLOT(getRankFinishedSlot(QNetworkReply * )));
 
+    QPixmap pix;
+    pix.load(":/picture/rankBackground.png");
+    resize(pix.size());
+    setMask(pix.mask());
+
+    int loadedFontID = QFontDatabase::addApplicationFont(":/font/miaowu.ttf");
+    QStringList loadedFontFamilies = QFontDatabase::applicationFontFamilies(loadedFontID);
+    QString mwfont = loadedFontFamilies.at(0);
+    ui->personalInfo->setFont(QFont(mwfont,25));
+
+    ui->sureButton->setStyleSheet(ButtonStyle);
+    ui->sureButton->setFont(QFont(mwfont,16));
 }
 rankBrowser::~rankBrowser()
 {
     delete ui;
+}
+void rankBrowser::paintEvent(QPaintEvent *event){
+    QPainter painter(this);
+    painter.drawPixmap(0,0,QPixmap(":/picture/rankBackground.png"));
 }
 void rankBrowser::getGlobalRank(int maxScore){
     QUrl url("http://jigsaw.api.admirable.one/getRank?my_highest_score="+QString::number(maxScore,10));
@@ -40,13 +57,21 @@ void rankBrowser::getGlobalRank(int maxScore){
 void rankBrowser::loadData(){
     readGameLog(gameRecord);
     showLocalMessage();
-    int maxRecord=(1<<30);
-    for(int i=0;i!=gameRecord.size();i++){
+    int maxRecord=(1<<30),index=-1;
+    for(unsigned int i=0;i!=gameRecord.size();i++){
         if(gameRecord[i].score<maxRecord){
             maxRecord=gameRecord[i].score;
+            index=i;
         }
     }
-    getGlobalRank(maxRecord);
+    if(index!=-1){
+        ui->personalInfo->setText("您的最好成绩为"+QString::number(gameRecord[index].score)+"分");
+        getGlobalRank(maxRecord);
+    }else{
+        ui->personalInfo->setText("");
+        getGlobalRank(-1);
+    }
+
 }
 void rankBrowser::showLocalMessage(){
     while(ui->gameRecordTable->rowCount()>0){
@@ -79,6 +104,9 @@ void rankBrowser::getRankFinishedSlot(QNetworkReply *reply) {
     qDebug() << reply->error();
 
     globalRecord.clear();
+    while(ui->globalRankTable->rowCount()>0){
+        ui->globalRankTable->removeRow(0);
+    }
 
     if (reply->error() == QNetworkReply::NoError) {
         QByteArray bytes = reply->readAll();
@@ -90,10 +118,11 @@ void rankBrowser::getRankFinishedSlot(QNetworkReply *reply) {
                 QJsonObject obj = parseDocument.object();
                 if (obj.contains("my_rank")) {
                     QJsonValue rank_value = obj.take("my_rank");
-                    if (rank_value.isDouble()) {
+                    if (rank_value.isDouble()&&rank_value.toInt()!=-1) {
                         globalRank=rank_value.toInt();
                         qDebug() << "My rank:" << rank_value.toInt();
                         QString rank = rank_value.toString();
+                        ui->personalInfo->setText(ui->personalInfo->text()+"  全球排名："+rank);
                     }
                 }
                 if (obj.contains("ranking_list")) {
@@ -136,21 +165,20 @@ void rankBrowser::getRankFinishedSlot(QNetworkReply *reply) {
             }
 
         }else{
-            while(ui->globalRankTable->rowCount()>0){
-                ui->globalRankTable->removeRow(0);
-            }
             ui->globalRankTable->insertRow(0);
             QTableWidgetItem* item = new QTableWidgetItem();
             item->setText("数据获取失败");
             ui->globalRankTable->setItem(0,0,item);
         }
     }else{
-        while(ui->globalRankTable->rowCount()>0){
-            ui->globalRankTable->removeRow(0);
-        }
         ui->globalRankTable->insertRow(0);
         QTableWidgetItem* item = new QTableWidgetItem();
         item->setText("数据获取失败");
         ui->globalRankTable->setItem(0,0,item);
     }
+}
+
+void rankBrowser::on_sureButton_clicked()
+{
+    rankBrowser::close();
 }

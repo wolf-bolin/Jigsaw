@@ -12,6 +12,7 @@
 #include <QTime>
 #include <QDebug>
 #include <vector>
+#include <QMessageBox>
 
 #include "gamelogic.h"
 #include "rankbrowser.h"
@@ -29,6 +30,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+protected:
+    void paintEvent(QPaintEvent *event);
 
 private slots:
     void on_picButton0_clicked();
@@ -108,18 +112,17 @@ private:
     setting settingDialog;
     success successDialog;
     QString picFilePath;
-    QString ButtonStyle_1 = "QPushButton{background-color:#907B63;"
-            "color: white;   border-radius: 5px;  border: 0; font: bold 18px;"
-            "border-style: outset;}"
-            "QPushButton:hover{background-color:#906d4a; }"
-            "QPushButton:pressed{background-color:#906d4a;"
-            "border-style: inset; }";
-    QString ButtonStyle_newGame = "QPushButton{background-color:#d19509;"
-            "color: white;   border-radius: 5px;  border: 0; font: bold 18px;"
-            "border-style: outset;}"
-            "QPushButton:hover{background-color:#d19509; }"
-            "QPushButton:pressed{background-color:#d19509;"
-            "border-style: inset; }";
+    QString ButtonStyle = "QPushButton{background-color:#907B63;"
+
+                            "color: white;   border-radius: 10px;  border: 2px groove gray;"
+
+                            "border-style: outset;}"
+
+                            "QPushButton:hover{background-color:white; color: black;}"
+
+                            "QPushButton:pressed{background-color:rgb(85, 170, 255);"
+
+                            "border-style: inset; }";
 
 };
 

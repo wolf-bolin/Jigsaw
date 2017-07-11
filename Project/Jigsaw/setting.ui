@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>730</width>
-    <height>547</height>
+    <width>1261</width>
+    <height>710</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,10 +16,10 @@
   <widget class="QPushButton" name="picButton1">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>40</y>
-     <width>141</width>
-     <height>181</height>
+     <x>500</x>
+     <y>280</y>
+     <width>115</width>
+     <height>115</height>
     </rect>
    </property>
    <property name="text">
@@ -29,10 +29,10 @@
   <widget class="QPushButton" name="picButton2">
    <property name="geometry">
     <rect>
-     <x>240</x>
-     <y>30</y>
-     <width>161</width>
-     <height>181</height>
+     <x>640</x>
+     <y>280</y>
+     <width>115</width>
+     <height>115</height>
     </rect>
    </property>
    <property name="text">
@@ -42,10 +42,10 @@
   <widget class="QPushButton" name="picButton4">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>270</y>
-     <width>171</width>
-     <height>191</height>
+     <x>500</x>
+     <y>400</y>
+     <width>115</width>
+     <height>115</height>
     </rect>
    </property>
    <property name="text">
@@ -55,10 +55,10 @@
   <widget class="QPushButton" name="picButton5">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>260</y>
-     <width>201</width>
-     <height>201</height>
+     <x>640</x>
+     <y>400</y>
+     <width>115</width>
+     <height>115</height>
     </rect>
    </property>
    <property name="text">
@@ -68,10 +68,10 @@
   <widget class="QPushButton" name="picButton3">
    <property name="geometry">
     <rect>
-     <x>440</x>
-     <y>30</y>
-     <width>181</width>
-     <height>171</height>
+     <x>780</x>
+     <y>280</y>
+     <width>115</width>
+     <height>115</height>
     </rect>
    </property>
    <property name="text">
@@ -81,14 +81,27 @@
   <widget class="QPushButton" name="picButton6">
    <property name="geometry">
     <rect>
-     <x>450</x>
-     <y>260</y>
-     <width>221</width>
-     <height>191</height>
+     <x>780</x>
+     <y>400</y>
+     <width>115</width>
+     <height>115</height>
     </rect>
    </property>
    <property name="text">
-    <string>自定义</string>
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="sureButton">
+   <property name="geometry">
+    <rect>
+     <x>830</x>
+     <y>530</y>
+     <width>81</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>确认</string>
    </property>
   </widget>
  </widget>

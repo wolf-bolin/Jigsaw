@@ -1,6 +1,14 @@
 <RCC>
     <qresource prefix="/picture">
-        <file>yzk.jpg</file>
-        <file>09.jpg</file>
+        <file>mainBackground.png</file>
+        <file>settingBackground.png</file>
+        <file>successBackground.png</file>
+        <file>01.jpg</file>
+        <file>02.jpg</file>
+        <file>03.jpg</file>
+        <file>04.jpg</file>
+        <file>00.jpg</file>
+        <file>05.jpg</file>
+        <file>rankBackground.png</file>
     </qresource>
 </RCC>

@@ -6,8 +6,27 @@ success::success(QWidget *parent) :
     ui(new Ui::success)
 {
     ui->setupUi(this);
-    
-    readGameLog(gameRecord);
+
+    QPixmap pix;
+    pix.load(":/picture/successBackground.png");
+    resize(pix.size());
+    setMask(pix.mask());
+
+    int loadedFontID = QFontDatabase::addApplicationFont(":/font/miaowu.ttf");
+    QStringList loadedFontFamilies = QFontDatabase::applicationFontFamilies(loadedFontID);
+    QString font = loadedFontFamilies.at(0);
+    ui->scoreLabel->setFont(QFont(font,36));
+    ui->stepLabel->setFont(QFont(font,36));
+    ui->timeLabel->setFont(QFont(font,36));
+    ui->userNameEdit->setFont(QFont(font,36));
+    ui->sureButton->setFont(QFont(font,20));
+    ui->sureButton->setStyleSheet(ButtonStyle);
+
+    ui->userNameEdit->setText("newUser");
+}
+void success::paintEvent(QPaintEvent *event){
+    QPainter painter(this);
+    painter.drawPixmap(0,0,QPixmap(":/picture/successBackground.png"));
 }
 
 success::~success()
@@ -17,10 +36,15 @@ success::~success()
 
 void success::on_sureButton_clicked()
 {
+    if(ui->userNameEdit->text()==""){
+        QMessageBox::information(this,tr("提示"),tr("给自己起个名字吧~"));
+        ui->userNameEdit->setText("newUser");
+    }
     QString username = ui->userNameEdit->text();
     qDebug()<<username;
     personal->userName=username.toStdString();
-    
+
+    readGameLog(gameRecord);
     gameRecord.push_back(*personal);
     saveGameLog(gameRecord);
     
