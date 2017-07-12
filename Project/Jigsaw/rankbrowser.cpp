@@ -34,7 +34,7 @@ rankBrowser::rankBrowser(QWidget *parent) :
     int loadedFontID = QFontDatabase::addApplicationFont(":/font/miaowu.ttf");
     QStringList loadedFontFamilies = QFontDatabase::applicationFontFamilies(loadedFontID);
     QString mwfont = loadedFontFamilies.at(0);
-    ui->personalInfo->setFont(QFont(mwfont,25));
+    ui->personalInfo->setFont(QFont(mwfont,20));
 
     ui->sureButton->setStyleSheet(ButtonStyle);
     ui->sureButton->setFont(QFont(mwfont,16));
@@ -121,8 +121,7 @@ void rankBrowser::getRankFinishedSlot(QNetworkReply *reply) {
                     if (rank_value.isDouble()&&rank_value.toInt()!=-1) {
                         globalRank=rank_value.toInt();
                         qDebug() << "My rank:" << rank_value.toInt();
-                        QString rank = rank_value.toString();
-                        ui->personalInfo->setText(ui->personalInfo->text()+"  全球排名："+rank);
+                        ui->personalInfo->setText(ui->personalInfo->text()+" 全球排名："+QString::number(rank_value.toInt(),10));
                     }
                 }
                 if (obj.contains("ranking_list")) {

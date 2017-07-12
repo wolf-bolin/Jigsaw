@@ -34,20 +34,23 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->autoSolveButton->setStyleSheet(ButtonStyle);
     ui->rankBrowse->setStyleSheet(ButtonStyle);
     ui->gameSettingButton->setStyleSheet(ButtonStyle);
-    ui->newGameButton->setStyleSheet(ButtonStyle);
+    ui->newGameButton->setStyleSheet(ButtonStyle_newGame);
     ui->undoStepButton->setStyleSheet(ButtonStyle);
     ui->exitGameButton->setStyleSheet(ButtonStyle);
 
     int loadedFontID = QFontDatabase::addApplicationFont(":/font/miaowu.ttf");
     QStringList loadedFontFamilies = QFontDatabase::applicationFontFamilies(loadedFontID);
     QString mwfont = loadedFontFamilies.at(0);
-    ui->saveStatusButton->setFont(QFont(mwfont,16));
-    ui->autoSolveButton->setFont(QFont(mwfont,16));
-    ui->rankBrowse->setFont(QFont(mwfont,16));
-    ui->gameSettingButton->setFont(QFont(mwfont,16));
-    ui->newGameButton->setFont(QFont(mwfont,16));
-    ui->undoStepButton->setFont(QFont(mwfont,16));
-    ui->exitGameButton->setFont(QFont(mwfont,16));
+    ui->saveStatusButton->setFont(QFont(mwfont,20));
+    ui->autoSolveButton->setFont(QFont(mwfont,20));
+    ui->rankBrowse->setFont(QFont(mwfont,20));
+    ui->gameSettingButton->setFont(QFont(mwfont,20));
+    ui->newGameButton->setFont(QFont(mwfont,20));
+    ui->undoStepButton->setFont(QFont(mwfont,20));
+    ui->exitGameButton->setFont(QFont(mwfont,20));
+    ui->gameScoreLCD->setFont(QFont(mwfont,26));
+    ui->gameStepLCD->setFont(QFont(mwfont,26));
+    ui->gameTimeLCD->setFont(QFont(mwfont,26));
 
     //数据初始化
     readStatus(numData,gameStep,gameTime);//读取本地文件或者初始化
@@ -224,7 +227,6 @@ void MainWindow::clickEvent(int n){
     }
     updateLCD();
     if(checkAnswer(numData)){
-        QMessageBox::information(this,tr("提示"),tr("游戏完成"));
         gameTimer->stop();
         playing=0;
         

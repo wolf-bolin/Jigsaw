@@ -18,7 +18,7 @@ success::success(QWidget *parent) :
     ui->scoreLabel->setFont(QFont(font,36));
     ui->stepLabel->setFont(QFont(font,36));
     ui->timeLabel->setFont(QFont(font,36));
-    ui->userNameEdit->setFont(QFont(font,36));
+    ui->userNameEdit->setFont(QFont(font,20));
     ui->sureButton->setFont(QFont(font,20));
     ui->sureButton->setStyleSheet(ButtonStyle);
 
@@ -66,6 +66,9 @@ void success::on_sureButton_clicked()
 void success::setParameter(int gameTime,int gameStep,int answerStep){
     int score=gameTime*(gameStep-answerStep+1);
     personal = new gameinfo("admin",gameTime,gameStep,score);
+    ui->scoreLabel->setText(QString::number(personal->score,10));
+    ui->stepLabel->setText(QString::number(personal->gameStep,10));
+    ui->timeLabel->setText(QString::number(personal->gameTime,10));
 }
 
 void success::newRecordFinishedSlot(QNetworkReply *reply) {
