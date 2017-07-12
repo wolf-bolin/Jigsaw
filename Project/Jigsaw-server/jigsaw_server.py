@@ -39,7 +39,7 @@ def create_app():
             my_score = int(request.values.get('my_highest_score'))
             db = get_db()
             cursor = db.cursor()
-            mysql_query = "SELECT * FROM ranking ORDER BY score DESC;"
+            mysql_query = "SELECT * FROM ranking ORDER BY score;"
             cursor.execute(mysql_query)
             result = cursor.fetchall()
             my_rank = 0
