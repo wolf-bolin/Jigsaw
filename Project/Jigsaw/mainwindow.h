@@ -59,10 +59,6 @@ private slots:
 
     void on_picButton8_clicked();
 
-    void addTime();
-
-    void AStarSolveStep();
-
     void on_newGameButton_clicked();
 
     void on_undoStepButton_clicked();
@@ -77,6 +73,10 @@ private slots:
 
     void on_gameSettingButton_clicked();
 
+    void addTime();
+
+    void AStarSolveStep();
+
     void setNewPicture(QString filePath);
 
 signals:
@@ -85,39 +85,37 @@ signals:
 private:
     Ui::MainWindow *ui;
 
-    std::vector<QPushButton*> numButton;
-    std::vector<int> numData;
+    //逻辑函数
+    void clickEvent(int n);
+    int findNumPos(int n);
+    void doNext(int m,int n);
+    void doRvoke(int m,int n);
+    bool checkAnswer(std::vector<int> &numData);
 
     //UI函数
     //void setNewPicture(QString filePath);
     void updateLCD();
     void SwapBtn(int m,int n);
 
-    //逻辑函数
-    int findNumPos(int n);
-    void clickEvent(int n);
-    void doNext(int m,int n);
-    void doRvoke(int m,int n);
-    bool checkAnswer(std::vector<int> &numData);
+    //逻辑存储
+    std::vector<QPushButton*> numButton;//储存按钮对象
+    std::vector<int> numData;//记录当前状态
+    std::vector<moveinfo> logs;//记录步骤
+    std::vector<moveinfo> answer;//储存游戏最优解
 
     //游戏组件
-    bool isStart = false;
     QTimer* gameTimer;//定时器 每秒更新时间
+    QTimer* CGTimer;//解题动画计时器
     QTime* timeRecord;//记录时间
-    bool playing;
-    int gameTime = 0;//记录游戏时间
+    bool playing;//判定游戏状态
+    int gameTime;//记录游戏时间
     int gameStep;//计步
-    std::vector<moveinfo> logs;//记录步骤
-
-    //解题组建
-    QTimer* CGTimer;
-    std::vector<moveinfo> answer;
 
     //UI样式
     QPoint offset;//鼠标位置记录值
-    rankBrowser rankBrowserWidget;
-    setting settingDialog;
-    success successDialog;
+    rankBrowser rankBrowserWidget;//新窗体
+    setting settingDialog;//新窗体
+    success successDialog;//新窗体
     QString picFilePath;
     QString ButtonStyle = "QPushButton{background-color:#907B63;"
                           "color: white;   border-radius: 5px;  border: 0; font: bold 18px;"

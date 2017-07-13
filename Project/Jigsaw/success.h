@@ -48,10 +48,11 @@ private:
     Ui::success *ui;
     gameinfo* personal;
     
+    //逻辑数据
     QNetworkAccessManager *manager;
-    
     std::vector<gameinfo> gameRecord;//历史游戏记录
 
+    //UI样式
     QPoint offset;//鼠标位置记录值
     QString ButtonStyle = "QPushButton{background-color:#907B63;"
 

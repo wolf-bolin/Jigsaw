@@ -39,21 +39,22 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event);
 
 private slots:
-    void getRankFinishedSlot(QNetworkReply *reply);
-
     void on_sureButton_clicked();
+    void getRankFinishedSlot(QNetworkReply *reply);
 
 private:
     Ui::rankBrowser *ui;
 
+    void getGlobalRank(int maxScore);
+    void showLocalMessage();
+
+    //逻辑数据
     std::vector<gameinfo> gameRecord;//历史游戏记录
     std::vector<gameinfo> globalRecord;
     QNetworkAccessManager *manager;
     int globalRank;
 
-    void getGlobalRank(int maxScore);
-    void showLocalMessage();
-
+    //UI样式
     QPoint offset;//鼠标位置记录值
     QString ButtonStyle = "QPushButton{background-color:#907B63;"
 

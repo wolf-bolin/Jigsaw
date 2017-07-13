@@ -39,48 +39,14 @@ rankBrowser::rankBrowser(QWidget *parent) :
     ui->sureButton->setStyleSheet(ButtonStyle);
     ui->sureButton->setFont(QFont(mwfont,16));
 }
+
 rankBrowser::~rankBrowser()
 {
     delete ui;
 }
-void rankBrowser::paintEvent(QPaintEvent *event){
-    QPainter painter(this);
-    painter.drawPixmap(0,0,QPixmap(":/picture/rankBackground.png"));
-}
-void rankBrowser::mousePressEvent(QMouseEvent *event){
-    if(event->button()== Qt::LeftButton)
-    {
-        offset=event->globalPos()-pos();
-    }
-}
-void rankBrowser::mouseMoveEvent(QMouseEvent *event){
-    if(event->buttons()&Qt::LeftButton)
-    {
-        QPoint temp;
-        QCursor cursor;
-        cursor.setShape(Qt::OpenHandCursor);
-        setCursor(cursor);
-
-        temp=event->globalPos()-offset;
-        move(temp);
-    }
-}
-void rankBrowser::mouseReleaseEvent(QMouseEvent *event){
-    if(!event->buttons())
-    {
-        QCursor cursor;
-        cursor.setShape(Qt::ArrowCursor);
-        setCursor(cursor);
-    }
-}
-void rankBrowser::getGlobalRank(int maxScore){
-    QUrl url("http://jigsaw.api.admirable.one/getRank?my_highest_score="+QString::number(maxScore,10));
-    QNetworkRequest request(url);
-    manager->get(request);
-    qDebug() << "GetRank network request sent."+url.toString();
-}
 
 void rankBrowser::loadData(){
+    //可从外部调用的数据加载函数
     readGameLog(gameRecord);
     showLocalMessage();
     int maxRecord=(1<<30),index=-1;
@@ -99,33 +65,50 @@ void rankBrowser::loadData(){
     }
 
 }
-void rankBrowser::showLocalMessage(){
-    while(ui->gameRecordTable->rowCount()>0){
-        ui->gameRecordTable->removeRow(0);
-    }
-    for(unsigned int i=0;i!=gameRecord.size();i++){
-        std::cout<<gameRecord[i].userName<<"  "
-                <<gameRecord[i].gameTime<<"  "
-               <<gameRecord[i].gameStep<<"  "
-              <<gameRecord[i].score<<std::endl;
-        int row_count = ui->gameRecordTable->rowCount(); //获取表单行数
-        ui->gameRecordTable->insertRow(row_count);      //插入新行
-        QTableWidgetItem *item1,*item2,*item3,*item4;   //新建一个item
-        item1 = new QTableWidgetItem();
-        item2 = new QTableWidgetItem();
-        item3 = new QTableWidgetItem();
-        item4 = new QTableWidgetItem();
-        item1->setText(QString::fromStdString(gameRecord[i].userName));            //给这个item设置文本
-        ui->gameRecordTable->setItem(row_count,0,item1); //将这个item加入到表单的第row_count行，第0列当中去
-        item2->setText(QString::number(gameRecord[i].gameTime,10));
-        ui->gameRecordTable->setItem(row_count,1,item2);
-        item3->setText(QString::number(gameRecord[i].gameStep,10));
-        ui->gameRecordTable->setItem(row_count,2,item3);
-        item4->setText(QString::number(gameRecord[i].score,10));
-        ui->gameRecordTable->setItem(row_count,3,item4);
+
+void rankBrowser::paintEvent(QPaintEvent *event){
+    QPainter painter(this);
+    painter.drawPixmap(0,0,QPixmap(":/picture/rankBackground.png"));
+}
+
+void rankBrowser::mousePressEvent(QMouseEvent *event){
+    if(event->button()== Qt::LeftButton)
+    {
+        offset=event->globalPos()-pos();
     }
 }
+
+void rankBrowser::mouseMoveEvent(QMouseEvent *event){
+    if(event->buttons()&Qt::LeftButton)
+    {
+        QPoint temp;
+        QCursor cursor;
+        cursor.setShape(Qt::OpenHandCursor);
+        setCursor(cursor);
+
+        temp=event->globalPos()-offset;
+        move(temp);
+    }
+}
+
+void rankBrowser::mouseReleaseEvent(QMouseEvent *event){
+    if(!event->buttons())
+    {
+        QCursor cursor;
+        cursor.setShape(Qt::ArrowCursor);
+        setCursor(cursor);
+    }
+}
+
+// ////////////////////////////////////////////////////////////////////
+//槽函数
+void rankBrowser::on_sureButton_clicked()
+{
+    rankBrowser::close();
+}
+
 void rankBrowser::getRankFinishedSlot(QNetworkReply *reply) {
+    //HTTP响应槽 获取全球排名
     qDebug() << "Slot finished.";
     qDebug() << reply->error();
 
@@ -203,7 +186,39 @@ void rankBrowser::getRankFinishedSlot(QNetworkReply *reply) {
     }
 }
 
-void rankBrowser::on_sureButton_clicked()
-{
-    rankBrowser::close();
+// ///////////////////////////////////////////////////////////////////
+//逻辑代码
+void rankBrowser::getGlobalRank(int maxScore){
+    //发起HTTP请求 获取全球排名
+    QUrl url("http://jigsaw.api.admirable.one/getRank?my_highest_score="+QString::number(maxScore,10));
+    QNetworkRequest request(url);
+    manager->get(request);
+    qDebug() << "GetRank network request sent."+url.toString();
+}
+
+void rankBrowser::showLocalMessage(){
+    while(ui->gameRecordTable->rowCount()>0){
+        ui->gameRecordTable->removeRow(0);
+    }
+    for(unsigned int i=0;i!=gameRecord.size();i++){
+        std::cout<<gameRecord[i].userName<<"  "
+                <<gameRecord[i].gameTime<<"  "
+               <<gameRecord[i].gameStep<<"  "
+              <<gameRecord[i].score<<std::endl;
+        int row_count = ui->gameRecordTable->rowCount(); //获取表单行数
+        ui->gameRecordTable->insertRow(row_count);      //插入新行
+        QTableWidgetItem *item1,*item2,*item3,*item4;   //新建一个item
+        item1 = new QTableWidgetItem();
+        item2 = new QTableWidgetItem();
+        item3 = new QTableWidgetItem();
+        item4 = new QTableWidgetItem();
+        item1->setText(QString::fromStdString(gameRecord[i].userName));            //给这个item设置文本
+        ui->gameRecordTable->setItem(row_count,0,item1); //将这个item加入到表单的第row_count行，第0列当中去
+        item2->setText(QString::number(gameRecord[i].gameTime,10));
+        ui->gameRecordTable->setItem(row_count,1,item2);
+        item3->setText(QString::number(gameRecord[i].gameStep,10));
+        ui->gameRecordTable->setItem(row_count,2,item3);
+        item4->setText(QString::number(gameRecord[i].score,10));
+        ui->gameRecordTable->setItem(row_count,3,item4);
+    }
 }

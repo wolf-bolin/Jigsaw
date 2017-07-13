@@ -71,10 +71,12 @@ MainWindow::MainWindow(QWidget *parent) :
     setNewPicture(picFilePath);//加载按钮图片
     updateLCD();//更新LCD
 }
+
 MainWindow::~MainWindow()
 {
     delete ui;
 }
+
 void MainWindow::paintEvent(QPaintEvent *event){
     QPainter painter(this);
     painter.drawPixmap(0,0,QPixmap(":/picture/mainBackground.png"));
@@ -88,6 +90,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event){
         MainWindow::showMinimized();
     }
 }
+
 void MainWindow::mouseMoveEvent(QMouseEvent *event){
     if(event->buttons()&Qt::LeftButton)
     {
@@ -100,6 +103,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event){
         move(temp);
     }
 }
+
 void MainWindow::mouseReleaseEvent(QMouseEvent *event){
     if(!event->buttons())
     {
@@ -108,31 +112,9 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event){
         setCursor(cursor);
     }
 }
+
 // ////////////////////////////////////////////////////////////////////////////
-//游戏功能相关
-void MainWindow::on_rankBrowse_clicked()
-{
-    rankBrowserWidget.loadData();
-    rankBrowserWidget.show();
-}
-void MainWindow::on_saveStatusButton_clicked()
-{
-    saveMoveLog(logs);
-    saveStatus(numData,gameStep,gameTime);
-    QMessageBox::information(this,tr("提示"),tr("数据保存成功"));
-}
-void MainWindow::on_exitGameButton_clicked()
-{
-    QApplication::quit();
-}
-void MainWindow::on_gameSettingButton_clicked()
-{
-    connect(&settingDialog,SIGNAL(sendPicPath(QString)),this,SLOT(setNewPicture(QString)));
-    settingDialog.setModal(true);
-    settingDialog.show();
-}
-// ////////////////////////////////////////////////////////////////////////////////////////
-//游戏内容相关
+//槽函数
 void MainWindow::on_picButton0_clicked()
 {
     clickEvent(0);
@@ -199,6 +181,18 @@ void MainWindow::on_undoStepButton_clicked()
     updateLCD();
 }
 
+void MainWindow::on_exitGameButton_clicked()
+{
+    QApplication::quit();
+}
+
+void MainWindow::on_saveStatusButton_clicked()
+{
+    saveMoveLog(logs);
+    saveStatus(numData,gameStep,gameTime);
+    QMessageBox::information(this,tr("提示"),tr("数据保存成功"));
+}
+
 void MainWindow::on_autoSolveButton_clicked()
 {
     if(playing==0){
@@ -213,8 +207,69 @@ void MainWindow::on_autoSolveButton_clicked()
     gameTime=0;
     gameStep=0;
 }
-// ///////////////////////////////////////////////////////////////////////////////////
-//逻辑代码块
+
+void MainWindow::on_rankBrowse_clicked()
+{
+    rankBrowserWidget.loadData();
+    rankBrowserWidget.show();
+}
+
+void MainWindow::on_gameSettingButton_clicked()
+{
+    connect(&settingDialog,SIGNAL(sendPicPath(QString)),this,SLOT(setNewPicture(QString)));
+    settingDialog.setModal(true);
+    settingDialog.show();
+}
+
+void MainWindow::addTime(){
+    //更新UI中时间的显示
+    gameTime++;
+    updateLCD();
+}
+
+void MainWindow::AStarSolveStep(){
+    //解题过程中的每一步操作
+    SwapBtn(answer.back().m,answer.back().n);
+    answer.pop_back();
+    if(answer.size()==0){
+        CGTimer->stop();
+    }
+}
+
+void MainWindow::setNewPicture(QString filePath){
+    //图像的重新载入
+    QImage picture;
+    if(!(picture.load(filePath)) ) //加载图像
+    {
+        QMessageBox::information(this,tr("打开图像失败"),tr("打开图像失败!"));
+        picFilePath = ":/picture/00.jpg";
+        saveSetting(picFilePath.toStdString());
+        return;
+    }
+    picFilePath = filePath;
+    saveSetting(picFilePath.toStdString());
+    QImage pictureScaled = picture.scaled(405,405);//设定大小
+    QPixmap pictureCut;
+    QIcon buttonIcon;
+    int picPos;
+    for(int i=0;i<8;i++){
+        pictureCut= QPixmap::fromImage(pictureScaled).copy((i%3)*135,(i/3)*135,135,135);
+        buttonIcon= QIcon(pictureCut);
+        picPos=findNumPos(i+1);
+        numButton[picPos]->setIcon(buttonIcon);
+        numButton[picPos]->setIconSize(QSize(135,135));
+    }
+    buttonIcon= QIcon();
+    numButton[findNumPos(0)]->setIcon(buttonIcon);
+    numButton[findNumPos(0)]->setIconSize(QSize(135,135));
+
+    pictureScaled = picture.scaled(160,160);
+    pictureCut = QPixmap::fromImage(pictureScaled);
+    ui->picturePreview->setPixmap(pictureCut);
+}
+
+// ////////////////////////////
+//逻辑函数
 void MainWindow::clickEvent(int n){
     if(!playing){
         QMessageBox::information(this,tr("提示"),tr("请开始一局新游戏"));
@@ -258,7 +313,7 @@ void MainWindow::clickEvent(int n){
     if(checkAnswer(numData)){
         gameTimer->stop();
         playing=0;
-        
+
         successDialog.setModal(true);
         successDialog.show();
         connect(this,SIGNAL(gameComplete(int,int,int)),&successDialog,SLOT(setParameter(int,int,int)));
@@ -266,6 +321,17 @@ void MainWindow::clickEvent(int n){
         return;
     }
 }
+
+int MainWindow::findNumPos(int n){
+    //用于查询每个数码的位置
+    for(unsigned int i=0;i!=numData.size();i++){
+        if(numData[i]==n){
+            return i;
+        }
+    }
+    return -1;
+}
+
 void MainWindow::doNext(int m,int n){
     SwapBtn(m,n);
     //计步
@@ -273,21 +339,13 @@ void MainWindow::doNext(int m,int n){
     //后台数据处理
     logs.push_back(moveinfo(gameStep,m,n));
 }
+
 void MainWindow::doRvoke(int m,int n){
     SwapBtn(m,n);
     //计步
     gameStep++;
 }
-void MainWindow::SwapBtn(int m,int n){
-    //交换图像
-    QIcon tem_icon = numButton[m]->icon();
-    numButton[m]->setIcon(numButton[n]->icon());
-    numButton[n]->setIcon(tem_icon);
-    //交换数字
-    int temp = numData[m];
-    numData[m] = numData[n];
-    numData[n] = temp;
-}
+
 bool MainWindow::checkAnswer(std::vector<int> &numData){
     for(int i=0;i!=8;i++){
         if(numData[i]!=i+1){
@@ -300,49 +358,10 @@ bool MainWindow::checkAnswer(std::vector<int> &numData){
     return true;
 }
 
-void MainWindow::setNewPicture(QString filePath){//图像的重新载入
-    QImage picture;
-    if(!(picture.load(filePath)) ) //加载图像
-    {
-        QMessageBox::information(this,tr("打开图像失败"),tr("打开图像失败!"));
-        picFilePath = ":/picture/00.jpg";
-        saveSetting(picFilePath.toStdString());
-        return;
-    }
-    picFilePath = filePath;
-    saveSetting(picFilePath.toStdString());
-    QImage pictureScaled = picture.scaled(405,405);//设定大小
-    QPixmap pictureCut;
-    QIcon buttonIcon;
-    int picPos;
-    for(int i=0;i<8;i++){
-        pictureCut= QPixmap::fromImage(pictureScaled).copy((i%3)*135,(i/3)*135,135,135);
-        buttonIcon= QIcon(pictureCut);
-        picPos=findNumPos(i+1);
-        numButton[picPos]->setIcon(buttonIcon);
-        numButton[picPos]->setIconSize(QSize(135,135));
-    }
-    buttonIcon= QIcon();
-    numButton[findNumPos(0)]->setIcon(buttonIcon);
-    numButton[findNumPos(0)]->setIconSize(QSize(135,135));
-
-    pictureScaled = picture.scaled(160,160);
-    pictureCut = QPixmap::fromImage(pictureScaled);
-    ui->picturePreview->setPixmap(pictureCut);
-}
-int MainWindow::findNumPos(int n){//用于查询每个数码的位置
-    for(unsigned int i=0;i!=numData.size();i++){
-        if(numData[i]==n){
-            return i;
-        }
-    }
-    return -1;
-}
-void MainWindow::addTime(){//更新UI中时间的显示
-    gameTime++;
-    updateLCD();
-}
-void MainWindow::updateLCD(){//更新UI中LCD
+// /////////////////////////////////////////////////////
+//UI函数
+void MainWindow::updateLCD(){
+    //更新UI中LCD
     int hh,mm,ss;
     hh=mm=ss=0;
     if(gameTime>3600){
@@ -360,10 +379,14 @@ void MainWindow::updateLCD(){//更新UI中LCD
     int scoreNow=gameTime*(gameStep-answer.size()+1);
     ui->gameScoreLCD->setText(QString::number(scoreNow,10));
 }
-void MainWindow::AStarSolveStep(){
-    SwapBtn(answer.back().m,answer.back().n);
-    answer.pop_back();
-    if(answer.size()==0){
-        CGTimer->stop();
-    }
+
+void MainWindow::SwapBtn(int m,int n){
+    //交换图像
+    QIcon tem_icon = numButton[m]->icon();
+    numButton[m]->setIcon(numButton[n]->icon());
+    numButton[n]->setIcon(tem_icon);
+    //交换数字
+    int temp = numData[m];
+    numData[m] = numData[n];
+    numData[n] = temp;
 }

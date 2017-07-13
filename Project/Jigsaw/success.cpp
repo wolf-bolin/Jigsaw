@@ -24,6 +24,7 @@ success::success(QWidget *parent) :
 
     ui->userNameEdit->setText("newUser");
 }
+
 void success::paintEvent(QPaintEvent *event){
     QPainter painter(this);
     painter.drawPixmap(0,0,QPixmap(":/picture/successBackground.png"));
@@ -33,12 +34,14 @@ success::~success()
 {
     delete ui;
 }
+
 void success::mousePressEvent(QMouseEvent *event){
     if(event->button()== Qt::LeftButton)
     {
         offset=event->globalPos()-pos();
     }
 }
+
 void success::mouseMoveEvent(QMouseEvent *event){
     if(event->buttons()&Qt::LeftButton)
     {
@@ -51,6 +54,7 @@ void success::mouseMoveEvent(QMouseEvent *event){
         move(temp);
     }
 }
+
 void success::mouseReleaseEvent(QMouseEvent *event){
     if(!event->buttons())
     {

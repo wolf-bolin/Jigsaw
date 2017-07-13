@@ -52,8 +52,10 @@ signals:
 private:
     Ui::setting *ui;
 
+    //逻辑数据
     QFileDialog* fileDialog;
 
+    //UI样式
     QPoint offset;//鼠标位置记录值
     QString ButtonStyle = "QPushButton{background-color:#907B63;"
 
