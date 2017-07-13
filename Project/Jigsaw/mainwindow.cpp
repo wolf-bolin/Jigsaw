@@ -163,6 +163,7 @@ void MainWindow::on_picButton8_clicked()
 void MainWindow::on_newGameButton_clicked()
 {
     newGame(numData,gameStep,gameTime);//随机生成一个合理的游戏
+    logs.clear();
     astar(numData,answer);//计算最优解，为计算分数做准备
     //UI更新
     setNewPicture(picFilePath);//加载按钮图片
@@ -198,6 +199,7 @@ void MainWindow::on_autoSolveButton_clicked()
     if(playing==0){
         return;
     }
+    logs.clear();
     playing=0;
     astar(numData,answer);
     CGTimer = new QTimer;
