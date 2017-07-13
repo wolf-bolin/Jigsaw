@@ -69,6 +69,32 @@ void setting::paintEvent(QPaintEvent *event){
     QPainter painter(this);
     painter.drawPixmap(0,0,QPixmap(":/picture/settingBackground.png"));
 }
+void setting::mousePressEvent(QMouseEvent *event){
+    if(event->button()== Qt::LeftButton)
+    {
+        offset=event->globalPos()-pos();
+    }
+}
+void setting::mouseMoveEvent(QMouseEvent *event){
+    if(event->buttons()&Qt::LeftButton)
+    {
+        QPoint temp;
+        QCursor cursor;
+        cursor.setShape(Qt::OpenHandCursor);
+        setCursor(cursor);
+
+        temp=event->globalPos()-offset;
+        move(temp);
+    }
+}
+void setting::mouseReleaseEvent(QMouseEvent *event){
+    if(!event->buttons())
+    {
+        QCursor cursor;
+        cursor.setShape(Qt::ArrowCursor);
+        setCursor(cursor);
+    }
+}
 void setting::on_picButton1_clicked()
 {
     emit sendPicPath(":/picture/00.jpg");

@@ -8,6 +8,9 @@
 #include <QBitmap>
 #include <QPainter>
 #include <QFontDatabase>
+#include <QPoint>
+#include <QCursor>
+#include <QMouseEvent>
 
 namespace Ui {
 class setting;
@@ -23,6 +26,9 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 
 private slots:
     void on_picButton6_clicked();
@@ -48,6 +54,7 @@ private:
 
     QFileDialog* fileDialog;
 
+    QPoint offset;//鼠标位置记录值
     QString ButtonStyle = "QPushButton{background-color:#907B63;"
 
                             "color: white;   border-radius: 10px;  border: 2px groove gray;"

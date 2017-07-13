@@ -47,6 +47,32 @@ void rankBrowser::paintEvent(QPaintEvent *event){
     QPainter painter(this);
     painter.drawPixmap(0,0,QPixmap(":/picture/rankBackground.png"));
 }
+void rankBrowser::mousePressEvent(QMouseEvent *event){
+    if(event->button()== Qt::LeftButton)
+    {
+        offset=event->globalPos()-pos();
+    }
+}
+void rankBrowser::mouseMoveEvent(QMouseEvent *event){
+    if(event->buttons()&Qt::LeftButton)
+    {
+        QPoint temp;
+        QCursor cursor;
+        cursor.setShape(Qt::OpenHandCursor);
+        setCursor(cursor);
+
+        temp=event->globalPos()-offset;
+        move(temp);
+    }
+}
+void rankBrowser::mouseReleaseEvent(QMouseEvent *event){
+    if(!event->buttons())
+    {
+        QCursor cursor;
+        cursor.setShape(Qt::ArrowCursor);
+        setCursor(cursor);
+    }
+}
 void rankBrowser::getGlobalRank(int maxScore){
     QUrl url("http://jigsaw.api.admirable.one/getRank?my_highest_score="+QString::number(maxScore,10));
     QNetworkRequest request(url);

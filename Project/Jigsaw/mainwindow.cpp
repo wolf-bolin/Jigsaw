@@ -79,6 +79,35 @@ void MainWindow::paintEvent(QPaintEvent *event){
     QPainter painter(this);
     painter.drawPixmap(0,0,QPixmap(":/picture/mainBackground.png"));
 }
+
+void MainWindow::mousePressEvent(QMouseEvent *event){
+    if(event->button()== Qt::LeftButton)
+    {
+        offset=event->globalPos()-pos();
+    }else if(event->button()== Qt::RightButton){
+        MainWindow::showMinimized();
+    }
+}
+void MainWindow::mouseMoveEvent(QMouseEvent *event){
+    if(event->buttons()&Qt::LeftButton)
+    {
+        QPoint temp;
+        QCursor cursor;
+        cursor.setShape(Qt::OpenHandCursor);
+        setCursor(cursor);
+
+        temp=event->globalPos()-offset;
+        move(temp);
+    }
+}
+void MainWindow::mouseReleaseEvent(QMouseEvent *event){
+    if(!event->buttons())
+    {
+        QCursor cursor;
+        cursor.setShape(Qt::ArrowCursor);
+        setCursor(cursor);
+    }
+}
 // ////////////////////////////////////////////////////////////////////////////
 //游戏功能相关
 void MainWindow::on_rankBrowse_clicked()

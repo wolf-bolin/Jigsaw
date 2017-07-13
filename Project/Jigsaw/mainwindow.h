@@ -13,6 +13,9 @@
 #include <QDebug>
 #include <vector>
 #include <QMessageBox>
+#include <QPoint>
+#include <QCursor>
+#include <QMouseEvent>
 
 #include "gamelogic.h"
 #include "rankbrowser.h"
@@ -33,6 +36,9 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 
 private slots:
     void on_picButton0_clicked();
@@ -108,6 +114,7 @@ private:
     std::vector<moveinfo> answer;
 
     //UI样式
+    QPoint offset;//鼠标位置记录值
     rankBrowser rankBrowserWidget;
     setting settingDialog;
     success successDialog;

@@ -33,6 +33,32 @@ success::~success()
 {
     delete ui;
 }
+void success::mousePressEvent(QMouseEvent *event){
+    if(event->button()== Qt::LeftButton)
+    {
+        offset=event->globalPos()-pos();
+    }
+}
+void success::mouseMoveEvent(QMouseEvent *event){
+    if(event->buttons()&Qt::LeftButton)
+    {
+        QPoint temp;
+        QCursor cursor;
+        cursor.setShape(Qt::OpenHandCursor);
+        setCursor(cursor);
+
+        temp=event->globalPos()-offset;
+        move(temp);
+    }
+}
+void success::mouseReleaseEvent(QMouseEvent *event){
+    if(!event->buttons())
+    {
+        QCursor cursor;
+        cursor.setShape(Qt::ArrowCursor);
+        setCursor(cursor);
+    }
+}
 
 void success::on_sureButton_clicked()
 {

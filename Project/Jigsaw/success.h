@@ -14,6 +14,9 @@
 #include <QMouseEvent>
 #include <QFontDatabase>
 #include <QMessageBox>
+#include <QPoint>
+#include <QCursor>
+#include <QMouseEvent>
 
 #include "gamelogic.h"
 
@@ -30,6 +33,10 @@ public:
     ~success();
 protected:
     void paintEvent(QPaintEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
+
 private slots:
     void on_sureButton_clicked();
     
@@ -45,6 +52,7 @@ private:
     
     std::vector<gameinfo> gameRecord;//历史游戏记录
 
+    QPoint offset;//鼠标位置记录值
     QString ButtonStyle = "QPushButton{background-color:#907B63;"
 
                             "color: white;   border-radius: 10px;  border: 2px groove gray;"

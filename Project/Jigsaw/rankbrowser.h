@@ -13,6 +13,9 @@
 #include <QFontDatabase>
 #include <QString>
 #include <QFont>
+#include <QPoint>
+#include <QCursor>
+#include <QMouseEvent>
 
 #include "gamelogic.h"
 
@@ -31,6 +34,9 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event);
+    void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event);
 
 private slots:
     void getRankFinishedSlot(QNetworkReply *reply);
@@ -48,17 +54,18 @@ private:
     void getGlobalRank(int maxScore);
     void showLocalMessage();
 
+    QPoint offset;//鼠标位置记录值
     QString ButtonStyle = "QPushButton{background-color:#907B63;"
 
-                            "color: white;   border-radius: 10px;  border: 2px groove gray;"
+                          "color: white;   border-radius: 10px;  border: 2px groove gray;"
 
-                            "border-style: outset;}"
+                          "border-style: outset;}"
 
-                            "QPushButton:hover{background-color:white; color: black;}"
+                          "QPushButton:hover{background-color:white; color: black;}"
 
-                            "QPushButton:pressed{background-color:rgb(85, 170, 255);"
+                          "QPushButton:pressed{background-color:rgb(85, 170, 255);"
 
-                            "border-style: inset; }";
+                          "border-style: inset; }";
 };
 
 #endif // RANKBROWSER_H
